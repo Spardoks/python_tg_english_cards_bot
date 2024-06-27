@@ -1,6 +1,3 @@
-# from models import *
-
-
 KNOWN_USERS = {}
 
 
@@ -83,18 +80,16 @@ def get_user_answer_variant(user_id, variant_index):
     return KNOWN_USERS[user_id][UserFields.TRAINING_CARD_VARIANTS].get(variant_index, None)
 
 
+
+def init_users():
+    return True
+
+
 def is_user_exist(user_id):
     return user_id in KNOWN_USERS and get_user_state(user_id) != UserStates.NOT_CREATED
 
 
-
-def init_users():
-    # TODOadd from db
-    return True
-
-
 def create_user(user_id):
-    # TODOadd to db
     try:
         KNOWN_USERS[user_id] = {}
         KNOWN_USERS[user_id][UserFields.STATE] = UserStates.MENU
@@ -109,6 +104,7 @@ def create_user(user_id):
             UserAnswerVariants.TRAINING_VARIANT_3: "",
             UserAnswerVariants.TRAINING_VARIANT_4: ""
         }
+        # get_user_cards_with_meanings(user_id)
         KNOWN_USERS[user_id][UserFields.CARDS] = {
             "word1": "meaning1",
             "word2": "meaning2",
@@ -128,7 +124,6 @@ def create_user(user_id):
 
 
 def get_user_cards_with_meanings(user_id):
-    # TODOget from db
     cards = {} if len(KNOWN_USERS[user_id][UserFields.CARDS]) == 0 else []
     try:
         for card, meaning in KNOWN_USERS[user_id][UserFields.CARDS].items():
@@ -139,7 +134,6 @@ def get_user_cards_with_meanings(user_id):
 
 
 def get_user_card_meaning(user_id, card):
-    # TODOget from db
     try:
         return KNOWN_USERS[user_id][UserFields.CARDS][card]
     except KeyError:
@@ -147,7 +141,6 @@ def get_user_card_meaning(user_id, card):
 
 
 def is_user_card_exist(user_id, card):
-    # TODOget from db
     try:
         return card in KNOWN_USERS[user_id][UserFields.CARDS]
     except KeyError:
@@ -155,8 +148,6 @@ def is_user_card_exist(user_id, card):
 
 
 def create_user_card(user_id, card, meaning):
-    # TODOadd to db
-    # TODOadd if aleady not exist
     try:
         KNOWN_USERS[user_id][UserFields.CARDS][card] = meaning
     except KeyError:
@@ -165,7 +156,6 @@ def create_user_card(user_id, card, meaning):
 
 
 def delete_user_card(user_id, card):
-    # TODOdelete from db
     try:
         del KNOWN_USERS[user_id][UserFields.CARDS][card]
     except KeyError:

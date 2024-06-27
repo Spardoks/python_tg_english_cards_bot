@@ -3,10 +3,14 @@ import random
 
 import telebot
 from telebot import types
-from dotenv import dotenv_values, load_dotenv
 
+from config import TG_TOKEN, USE_DB
 
-from users import *
+if USE_DB == 'True':
+    from users_db import *
+else:
+    from users import *
+
 
 
 class BotCommands:
@@ -18,10 +22,7 @@ class BotCommands:
     TRAINING = 'traning'
 
 
-config = dotenv_values(".env")
-load_dotenv()
-token = config["TG_TOKEN"]
-BOT = telebot.TeleBot(token)
+BOT = telebot.TeleBot(TG_TOKEN)
 
 def run_bot():
     global BOT
